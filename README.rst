@@ -84,15 +84,12 @@ Edit ``$HOME/.tmux.conf`` to display the program's output in *status-left* or
 *status-right*.  For example::
 
   set -g status-interval 2
-  set -g status-left "#S #[fg=green,bg=black,bright]#(tmux-mem-cpu-load 2)#[default]"
+  set -g status-left "#S #(tmux-mem-cpu-load 2 'fg=blue,bg=black,bright')#[default]"
 
 Note that the first argument to `tmux-mem-cpu-load` should be the same number
 of seconds that *status-interval* is set at.
 
-An optional second argument is the number of bars in the bar graph, which
-defaults to 10.  This can, for instance, be set to the number of cores in a
-multi-core system.
-
+An optional second argument is the default color for the text.
 
 Author
 ======

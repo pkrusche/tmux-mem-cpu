@@ -86,7 +86,17 @@ string tick( int percentage )
   string ticks = "▁▂▃▄▅▆▇█";
   int ticks_count = ticks.size() / 3;
   int tick_pos = (ticks_count * percentage) / 101;
-  return ticks.substr(tick_pos * 3, 3);
+  ostringstream oss;
+
+  if (percentage > 75) {
+    oss << "#[fg=red]";
+  } else if (percentage > 50) {
+    oss << "#[fg=yellow]";
+  } else {
+    oss << "#[fg=green]";
+  }
+  oss << ticks.substr(tick_pos * 3, 3);
+  return oss.str();
 }
 
 string cpu_string( unsigned int cpu_usage_delay )
@@ -148,6 +158,7 @@ string mem_string()
 int main(int argc, char** argv)
 {
   unsigned int cpu_usage_delay = 900000;
+  string color = "default";
   try
   {
   istringstream iss;
@@ -159,14 +170,21 @@ int main(int argc, char** argv)
       iss >> status_interval;
       cpu_usage_delay = status_interval * 1000000 - 100000;
     }
+  if( argc > 2 )
+    {
+      iss.str( argv[2] );
+      iss.clear();
+      iss >> color;
+    }
   }
   catch(const exception &e)
   {
-    cerr << "Usage: " << argv[0] << " [tmux_status-interval(seconds)]" << endl;
+    cerr << "Usage: " << argv[0] << " [tmux_status-interval(seconds)] [color]" << endl;
     return 1;
   }
 
-  std::cout << mem_string() << ' ' << cpu_string( cpu_usage_delay );
+  std::cout << mem_string() << "#[" << color << "] ";
+  std::cout << cpu_string( cpu_usage_delay ) << "#[" << color << "] ";
 
   return 0;
 }
