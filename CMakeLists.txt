@@ -3,7 +3,7 @@ if(COMMAND cmake_policy)
     cmake_policy(VERSION 2.6)
 endif(COMMAND cmake_policy)
 
-project( tmux-mem-cpu-load )
+project( tmux-mem-cpu )
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING
@@ -11,8 +11,8 @@ if(NOT CMAKE_BUILD_TYPE)
       FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-add_executable(tmux-mem-cpu-load tmux-mem-cpu-load.cpp)
-install(TARGETS tmux-mem-cpu-load
+add_executable(tmux-mem-cpu tmux-mem-cpu.cpp)
+install(TARGETS tmux-mem-cpu
   RUNTIME
   DESTINATION bin
   )

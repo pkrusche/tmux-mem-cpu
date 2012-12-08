@@ -1,8 +1,8 @@
 ====================================================
-               tmux-mem-cpu-load
+               tmux-mem-cpu
 ====================================================
 ----------------------------------------------------
-CPU and RAM monitor for use with tmux_
+CPU and RAM monitor for use with tmux_ on Linux
 ----------------------------------------------------
 
 
@@ -19,6 +19,8 @@ The memory monitor displays the used and available memory.
 The CPU usage monitor outputs a percent CPU usage over all processors.
 
 It also displays a textual bar graph of the current percent usage.
+
+.. image:: screenshot.png
 
 Example output::
 
@@ -84,19 +86,20 @@ Edit ``$HOME/.tmux.conf`` to display the program's output in *status-left* or
 *status-right*.  For example::
 
   set -g status-interval 2
-  set -g status-left "#S #(tmux-mem-cpu-load 2 'fg=blue,bg=black,bright')#[default]"
+  set -g status-left "#S #(tmux-mem-cpu 2 'fg=blue,bg=black,bright')#[default]"
 
-Note that the first argument to `tmux-mem-cpu-load` should be the same number
+Note that the first argument to `tmux-mem-cpu` should be the same number
 of seconds that *status-interval* is set at.
 
-An optional second argument is the default color for the text.
+An optional second argument is the default text foreground color.
 
-Author
-======
+Authors
+=======
 
 Matt McCormick (thewtex) <matt@mmmccormick.com>
+Martin André <martin.andre@gmail.com>
 
 
 .. _tmux: http://tmux.sourceforge.net/
 .. _cmake: http://www.cmake.org
-.. _`project homepage`: http://github.com/thewtex/tmux-mem-cpu-load
+.. _`project homepage`: http://github.com/mandre/tmux-mem-cpu
