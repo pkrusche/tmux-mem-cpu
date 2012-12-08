@@ -147,16 +147,6 @@ string mem_string()
   return oss.str();
 }
 
-string load_string()
-{
-  ifstream loadavg_file( "/proc/loadavg" );
-  string load_line;
-  getline( loadavg_file, load_line );
-  loadavg_file.close();
-
-  return load_line.substr( 0, 14 );
-}
-
 int main(int argc, char** argv)
 {
   unsigned int cpu_usage_delay = 900000;
@@ -185,7 +175,7 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  std::cout << mem_string() << ' ' << cpu_string( cpu_usage_delay, graph_lines ) << ' ' << load_string();
+  std::cout << mem_string() << ' ' << cpu_string( cpu_usage_delay, graph_lines );
 
   return 0;
 }

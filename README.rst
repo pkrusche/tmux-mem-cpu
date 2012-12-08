@@ -2,7 +2,7 @@
                tmux-mem-cpu-load
 ====================================================
 ----------------------------------------------------
-CPU, RAM memory, and load monitor for use with tmux_
+CPU and RAM monitor for use with tmux_
 ----------------------------------------------------
 
 
@@ -19,23 +19,18 @@ The memory monitor displays the used and available memory.
 The CPU usage monitor outputs a percent CPU usage over all processors. It also
 displays a textual bar graph of the current percent usage.
 
-The system load average is also displayed.
-
 Example output::
 
-  2885/7987MB [|||||     ]  51.2% 2.11 2.35 2.44
+  2885/7987MB [|||||     ]  51.2%
 
-   ^    ^          ^         ^     ^    ^    ^
-   |    |          |         |     |    |    |
-   1    2          3         4     5    6    G
+   ^    ^          ^         ^
+   |    |          |         |
+   1    2          3         4
 
 1. Currently used memory.
 2. Available memory.
 3. CPU usage bar graph.
 4. CPU usage percentage.
-5. Load average for the past minute.
-6. Load average for the past 5 minutes.
-7. Load average for the past 15 minutes.
 
 
 Installation
