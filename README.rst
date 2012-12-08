@@ -20,11 +20,14 @@ The CPU usage monitor outputs a percent CPU usage over all processors.
 
 It also displays a textual bar graph of the current percent usage.
 
-.. image:: screenshot.png
+Screenshot
+==========
+
+.. image:: https://github.com/mandre/tmux-mem-cpu/raw/master/screenshot.png
 
 Example output::
 
-  2885/7987MB ▃  51.2% ▅
+  1119/3819MB ▄  76.5% ▇
 
    ^    ^     ^    ^   ^
    |    |     |    |   |
