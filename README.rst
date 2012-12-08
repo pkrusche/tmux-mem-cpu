@@ -12,25 +12,27 @@ Description
 
 
 A simple, lightweight program provided for system monitoring in the *status*
-line of **tmux**.
+line of **tmux** on Linux.
 
 The memory monitor displays the used and available memory.
 
-The CPU usage monitor outputs a percent CPU usage over all processors. It also
-displays a textual bar graph of the current percent usage.
+The CPU usage monitor outputs a percent CPU usage over all processors.
+
+It also displays a textual bar graph of the current percent usage.
 
 Example output::
 
-  2885/7987MB [|||||     ]  51.2%
+  2885/7987MB ▃  51.2% ▅
 
-   ^    ^          ^         ^
-   |    |          |         |
-   1    2          3         4
+   ^    ^     ^    ^   ^
+   |    |     |    |   |
+   1    2     3    4   5
 
 1. Currently used memory.
 2. Available memory.
-3. CPU usage bar graph.
+3. Memory usage bar graph.
 4. CPU usage percentage.
+5. CPU usage bar graph.
 
 
 Installation

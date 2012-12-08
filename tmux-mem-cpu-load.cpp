@@ -81,30 +81,26 @@ float cpu_percentage( unsigned int cpu_usage_delay )
   return static_cast<float>(diff_user + diff_system + diff_nice)/static_cast<float>(diff_user + diff_system + diff_nice + diff_idle)*100.0;
 }
 
-string cpu_string( unsigned int cpu_usage_delay, unsigned int graph_lines )
+string tick( int percentage )
 {
-  string meter( graph_lines + 2, ' ' );
-  meter[0] = '[';
-  meter[meter.length() - 1] = ']';
-  int meter_count = 0;
+  string ticks = "▁▂▃▄▅▆▇█";
+  int ticks_count = ticks.size() / 3;
+  int tick_pos = (ticks_count * percentage) / 101;
+  return ticks.substr(tick_pos * 3, 3);
+}
+
+string cpu_string( unsigned int cpu_usage_delay )
+{
   float percentage;
   ostringstream oss;
   oss.precision( 1 );
   oss.setf( ios::fixed | ios::right );
 
   percentage = cpu_percentage( cpu_usage_delay );
-  float meter_step = 99.9 / graph_lines;
-  meter_count = 1;
-  while(meter_count*meter_step < percentage)
-    {
-    meter[meter_count] = '|';
-    meter_count++;
-    }
 
-  oss << meter;
   oss.width( 5 );
-  oss << percentage;
-  oss << "%";
+  oss << percentage << "% ";
+  oss << tick(percentage);
 
   return oss.str();
 }
@@ -142,7 +138,9 @@ string mem_string()
     }
   meminfo_file.close();
 
-  oss << used_mem / 1024 << '/' << total_mem / 1024 << "MB";
+  oss << used_mem / 1024 << '/' << total_mem / 1024 << "MB ";
+  oss << tick(used_mem * 100 / total_mem);
+  oss.width( 3 );
 
   return oss.str();
 }
@@ -150,7 +148,6 @@ string mem_string()
 int main(int argc, char** argv)
 {
   unsigned int cpu_usage_delay = 900000;
-  unsigned int graph_lines = 10;
   try
   {
   istringstream iss;
@@ -162,20 +159,14 @@ int main(int argc, char** argv)
       iss >> status_interval;
       cpu_usage_delay = status_interval * 1000000 - 100000;
     }
-  if( argc > 2 )
-    {
-    iss.str( argv[2] );
-    iss.clear();
-    iss >> graph_lines;
-    }
   }
   catch(const exception &e)
   {
-    cerr << "Usage: " << argv[0] << " [tmux_status-interval(seconds)] [graph lines]" << endl;
+    cerr << "Usage: " << argv[0] << " [tmux_status-interval(seconds)]" << endl;
     return 1;
   }
 
-  std::cout << mem_string() << ' ' << cpu_string( cpu_usage_delay, graph_lines );
+  std::cout << mem_string() << ' ' << cpu_string( cpu_usage_delay );
 
   return 0;
 }
