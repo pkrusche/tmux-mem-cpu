@@ -99,8 +99,8 @@ An optional second argument is the default text foreground color.
 Authors
 =======
 
-Matt McCormick (thewtex) <matt@mmmccormick.com>
-Martin André <martin.andre@gmail.com>
+* Matt McCormick (thewtex) <matt@mmmccormick.com>
+* Martin André <martin.andre@gmail.com>
 
 
 .. _tmux: http://tmux.sourceforge.net/
