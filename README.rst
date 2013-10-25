@@ -2,7 +2,7 @@
                tmux-mem-cpu
 ====================================================
 ----------------------------------------------------
-CPU and RAM monitor for use with tmux_ on Linux
+CPU and RAM monitor for use with tmux_
 ----------------------------------------------------
 
 
@@ -12,7 +12,7 @@ Description
 
 
 A simple, lightweight program provided for system monitoring in the *status*
-line of **tmux** on Linux.
+line of **tmux**.
 
 The memory monitor displays the used and available memory.
 
