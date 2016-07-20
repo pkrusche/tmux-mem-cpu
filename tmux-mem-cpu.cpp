@@ -156,6 +156,7 @@ float cpu_percentage( unsigned int cpu_usage_delay )
 
 std::string tick( int percentage )
 {
+  percentage = std::max(0, std::min(100, percentage));
   std::string ticks = "▁▂▃▄▅▆▇█";
   int ticks_count = ticks.size() / 3;
   int tick_pos = (ticks_count * percentage) / 101;
@@ -231,34 +232,48 @@ std::string mem_string()
   total_mem /= 1024;
 
 #else // Linux
-  unsigned int total_mem;
-  unsigned int used_mem;
-  unsigned int unused_mem;
+  unsigned int total_mem = 0;
+  unsigned int used_mem = 0;
+  unsigned int unused_mem = 0;
   size_t line_start_pos;
   size_t line_end_pos;
   std::istringstream iss;
   std::string mem_line;
 
   std::ifstream meminfo_file( "/proc/meminfo" );
-  getline( meminfo_file, mem_line );
-  line_start_pos = mem_line.find_first_of( ':' );
-  line_start_pos++;
-  line_end_pos = mem_line.find_first_of( 'k' );
-  iss.str( mem_line.substr( line_start_pos, line_end_pos - line_start_pos ) );
-  iss >> total_mem;
-
-  used_mem = total_mem;
 
   for( unsigned int i = 0; i < 3; i++ )
-    {
-    getline( meminfo_file, mem_line );
-    line_start_pos = mem_line.find_first_of( ':' );
-    line_start_pos++;
-    line_end_pos = mem_line.find_first_of( 'k' );
-    iss.str( mem_line.substr( line_start_pos, line_end_pos - line_start_pos ) );
-    iss >> unused_mem;
-    used_mem -= unused_mem;
-    }
+  {
+      getline( meminfo_file, mem_line );
+      line_start_pos = mem_line.find_first_of( ':' );
+      const std::string which = mem_line.substr(0, line_start_pos);
+      if(which != "MemTotal" && which != "MemFree" && which != "Buffers" && which != "Cached")
+      {
+          continue;
+      }
+      line_start_pos++;
+      line_end_pos = mem_line.find_last_of( 'k' );
+      iss.str( mem_line.substr( line_start_pos, line_end_pos - line_start_pos ) );
+      if(which == "MemTotal")
+      {
+          iss >> total_mem;
+      }
+      else
+      {
+          int current;
+          iss >> current;
+          unused_mem += current;
+      }
+  }
+
+  if(unused_mem > total_mem)
+  {
+      used_mem = 0;
+  }
+  else
+  {
+      used_mem = total_mem - unused_mem;
+  }
   meminfo_file.close();
 #endif // platform
 
