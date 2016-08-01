@@ -242,7 +242,7 @@ std::string mem_string()
 
   std::ifstream meminfo_file( "/proc/meminfo" );
 
-  for( unsigned int i = 0; i < 3; i++ )
+  while(meminfo_file.good())
   {
       getline( meminfo_file, mem_line );
       line_start_pos = mem_line.find_first_of( ':' );
